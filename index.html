@@ -1,0 +1,215 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title> {HTML Basics} Membuat Input Data Dengan Javascript Tanpa Database</title>
+  </head>
+  <body>
+        
+    <div class="container">
+    <div class="tab table text-center table-1">
+        <table>
+         <tr>
+         <td>
+        <form name="survey">
+            <h1 class="text-center">Manage Product</h1>
+                        <pre>
+    <input class="form-control" type='number' placeholder="ID Products" name='vtiket' id="vtiket" size="46"><br>
+    <input class="form-control" type='text' placeholder="Nama Product" name='vnama' id="vnama" size="46"><br>
+    <b>KATEGORI</b>
+    <select class="form-select" name='vkategori' id="vkategori">
+         <option selected></option>
+                        <option>Vga</option>
+                        <option >Pheriferal</option>
+                        <option >Processor</option>
+                        <option >Casing</option>         
+                        <option >Motherboard</option>
+                        <option >Storage SSD/HDD</option>
+                              </select><br>
+    <b>Admin yang isi</b>
+    <select name='vhandle' id="vhandle">
+         <option></option>
+                        <option>Zidan Khulul Sazid</option>
+                              </select><br>
+    <b>Jumlah</b>
+    <select name='vnilai' id="vnilai">
+         <option></option>
+                        <option>+10</option>
+                        <option>+20</option>
+                        <option>+30</option>
+                        <option>+40</option>             
+                        <option>+50</option>
+         <option>+60</option>
+         <option>+70</option>
+         <option>+80</option>
+         <option>+90</option>
+         <option>+100</option>
+                              </select>
+                        </pre>
+         
+     
+                    </form>
+                        <button class="btn" onclick="SubmitData();">SUBMIT</button>&nbsp;&nbsp;&nbsp;
+                        <button class="btn" onclick="UpdateData();">UPDATE</button>
+          </td>
+          </tr>
+         </table>
+        </div>
+            </div>
+      <br>
+      <div class="tab table-2">
+                    <table id="survey" cellpadding="2" >
+         <tr>
+         <th colspan="7" bgcolor="white" align="center">List Product</th>
+         </tr>
+                        <tr>
+                            <th width="100">ID Product</th>
+                            <th >Nama Product</th>
+                            <th width="150">KATEGORI</th>
+                            <th >Admin</th>
+          <th width="150">Jumlah</th>
+          <th colspan="2" width="150">Opsi</th>
+                        </tr>
+                        
+                    </table>
+                </div>
+      
+            
+            <script>
+                            var rIndex,
+                    table = document.getElementById("survey");
+    
+                function SubmitData() //fungsi menambahkan data
+                {
+        var getLastIndex = table.getElementsByTagName("tr").length;
+                    if(!HarusIsiData()){
+                    var newRow = table.insertRow(getLastIndex),
+                        cell1 = newRow.insertCell(0),
+                        cell2 = newRow.insertCell(1),
+                        cell3 = newRow.insertCell(2),
+                        cell4 = newRow.insertCell(3),
+         cell5 = newRow.insertCell(4),
+         cell6 = newRow.insertCell(5),
+         cell7 = newRow.insertCell(6),
+         
+                        vtiket = document.getElementById("vtiket").value,
+                        vnama = document.getElementById("vnama").value,
+                        vkategori = document.getElementById("vkategori").value;
+                        vhandle = document.getElementById("vhandle").value;
+         vnilai = document.getElementById("vnilai").value;
+         vbtn_edit = "<button onclick='EditData(" + getLastIndex + ")'>  Edit  </button>";
+         vbtn_delet = "<button onclick='DeleteData(" + getLastIndex + ")'>Delete</button>";
+            
+                
+                        cell1.innerHTML = vtiket;
+                        cell2.innerHTML = vnama;
+                        cell3.innerHTML = vkategori;
+                        cell4.innerHTML = vhandle;
+         cell5.innerHTML = vnilai;
+         cell6.innerHTML = vbtn_edit;
+         cell7.innerHTML = vbtn_delet;
+        
+         clearform();
+         
+          
+        }
+                }
+                
+                function EditData(index) //fungsi tombol edit
+                {
+        rIndex = index;
+                     document.getElementById("vtiket").value = table.rows[index].cells[0].innerHTML;
+          document.getElementById("vnama").value = table.rows[index].cells[1].innerHTML;
+          document.getElementById("vkategori").value = table.rows[index].cells[2].innerHTML;
+          document.getElementById("vhandle").value = table.rows[index].cells[3].innerHTML;
+          document.getElementById("vnilai").value = table.rows[index].cells[4].innerHTML;
+          alert("Silahkan ubah data ini pada ~List Products~");
+          
+                }
+                
+                function UpdateData() //fungsi tombol update
+                {
+                    var vtiket = document.getElementById("vtiket").value;
+                        vnama = document.getElementById("vnama").value;
+                        vkategori = document.getElementById("vkategori").value;
+                    vhandle = document.getElementById("vhandle").value;
+        vnilai = document.getElementById("vnilai").value;
+    
+                   if(!HarusIsiData()){
+                       table.rows[rIndex].cells[0].innerHTML = vtiket;
+                       table.rows[rIndex].cells[1].innerHTML = vnama;
+                       table.rows[rIndex].cells[2].innerHTML = vkategori;
+                       table.rows[rIndex].cells[3].innerHTML = vhandle;
+           table.rows[rIndex].cells[4].innerHTML = vnilai;
+           
+           clearform();
+           document.getElementById("survey").scrollIntoView(true);
+           alert("Update Data Berhasil");
+                  }
+                }
+                
+                function DeleteData(rowIndex) //fungsi tombol delete
+                {
+        var index;
+        if (rowIndex != null) {
+         index = rowIndex;
+        } else {
+         index = rIndex;
+        }
+                    table.deleteRow(index);
+        alert("Data Berhasil Dihapus");
+                    
+                 
+                }
+       
+       function clearform() //fungsi reset form setiap kali setelah klik submit / update
+       {
+       document.getElementById("vtiket").value = "";
+                document.getElementById("vnama").value = "";
+                document.getElementById("vkategori").value = "";
+                document.getElementById("vhandle").value = "";
+       document.getElementById("vnilai").value = "";
+       }
+       
+        function HarusIsiData() //fungsi alert saat salah satu bagian form tidak diisi
+                {
+                    var isEmpty = false,
+                        vtiket = document.getElementById("vtiket").value,
+                        vnama = document.getElementById("vnama").value,
+                        vkategori = document.getElementById("vkategori").value;
+                        vhandle = document.getElementById("vhandle").value;
+         vnilai = document.getElementById("vnilai").value;
+                
+                        if (vtiket === "") {
+                        alert("~Id Products~ HARUS DI ISI !!");
+                        isEmpty = true;
+                    }
+                        else if (vnama === "") {
+                        alert("~Nama Product~ HARUS DI ISI !!");
+                        isEmpty = true;
+                    }
+                        else if (vkategori === "") {
+                        alert("~Kategori~ HARUS DI ISI !!");
+                        isEmpty = true;
+                    }
+         else if (vhandle === "") {
+                        alert("~Admin~ HARUS DI ISI !!");
+                        isEmpty = true;
+                    }
+                        else if (vnilai ===""){
+                        alert("~Jumlah~ HARUS DI ISI !!");
+                        isEmpty = true;
+                      
+                    }
+                    return isEmpty;
+                }
+            </script>
+     </center>
+        </body>
+</html>
